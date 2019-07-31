@@ -5,7 +5,7 @@ Python library for converting pairwise Learning-To-Rank Neural Network models (R
 
 ## Supported model structure
 
-It supports pairwise Learning-To-Rank (LTR) algorithms such as Ranknet and LambdaRanker, where the underlying model (hidden layers) is a neural network (NN) model. 
+It supports pairwise Learning-To-Rank (LTR) algorithms such as Ranknet and LambdaRank, where the underlying model (hidden layers) is a neural network (NN) model. 
 <img src="https://github.com/liyinxiao/rankerNN2pmml/blob/master/assets/rankerNN2pmml_model.png" width=750>
 
 ## Installation
@@ -33,6 +33,12 @@ INPUT_DIM = 3
 X1 = 2 * np.random.uniform(size=(50, INPUT_DIM))
 X2 = np.random.uniform(size=(50, INPUT_DIM))
 Y = [random.randint(0,1) for _ in range(50)]
+
+# data transformation
+mms = MinMaxScaler()
+mms.fit(np.concatenate((X1, X2), axis=0))
+X1 = mms.transform(X1)
+X2 = mms.transform(X2)
 
 def RankNet_model(input_shape):
     # Neural network structure
@@ -67,14 +73,14 @@ params = {
     'feature_names': ['Feature1', 'Feature2', 'Feature3'],
     'target_name': 'score'
 }
-rankerNN2pmml(estimator=model, file='model.pmml', **params)
+rankerNN2pmml(estimator=model, transformer=mms, file='model.pmml', **params)
 ```
 
 ## Params explained
-* **estimator**: Keras model to be exported as PMML (for supported models - see bellow).
+* **estimator**: Keras model to be exported as PMML (see supported model structure above).
 * **transformer**: if provided then scaling is applied to data fields.
-* **file**: name of the file where the PMML will be exported.
-* **feature_names**: when provided and have same shape as input layer, then features will have custom names, otherwise generic names (x<sub>0</sub>,..., x<sub>n-1</sub>) will be used.
+* **file**: name of the file where PMML will be exported.
+* **feature_names**: when provided and have same shape as input layer, features will have custom names, otherwise generic names (x<sub>0</sub>,..., x<sub>n-1</sub>) will be used.
 * **target_name**: when provided target variable will have custom name, otherwise generic name **score** will be used.
 
 ## What is supported?
