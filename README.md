@@ -6,7 +6,7 @@ Python library for converting pairwise Learning-To-Rank Neural Network models (R
 ## Supported model structure
 
 It supports pairwise Learning-To-Rank (LTR) algorithms such as Ranknet and LambdaRanker, where the underlying model (hidden layers) is a neural network (NN) model. 
-<img src="https://github.com/liyinxiao/rankerNN2pmml/blob/master/assets/supported_model.png" width=750>
+<img src="https://github.com/liyinxiao/rankerNN2pmml/blob/master/assets/rankerNN2pmml_model.png" width=750>
 
 ## Installation
 ```
